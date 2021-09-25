@@ -10,6 +10,7 @@
 	"license": "MIT",
 	"type": "module",
 	"main": "./index.ts",
+	"types": "./dist/index.d.ts",
 	"exports": "./dist/index.js",
 	"keywords": [
 		"cache",
@@ -25,15 +26,15 @@
 	],
 	"scripts": {
 		"tsc": "tsc",
-		"test": "ava && tsd"
+		"move-tsd": "cp index.test-d.ts ./dist/index.test-d.ts",
+		"clean-tsd": "rm ./dist/index.test-d.ts",
+		"tsd": "yarn move-tsd && tsd && yarn clean-tsd",
+		"test": "ava && yarn tsd"
 	},
 	"devDependencies": {
 		"ava": "^3.15.0",
 		"delay": "^5.0.0",
 		"tsd": "^0.17.0",
 		"typescript": "^4.4.3"
-	},
-	"tsd": {
-		"directory": "dist"
 	}
 }

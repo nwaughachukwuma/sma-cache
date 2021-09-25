@@ -1,5 +1,7 @@
 import test from "ava";
 import delay from 'delay'
+// import tsd from 'tsd/dist/lib/index.js';
+// import path from 'path'
 import simpleCache from "./dist/index.js";
 
 const CACHE_TTL = 5
@@ -35,3 +37,14 @@ test('can programmatically invalidate cache', async t => {
   const value = cache.get(key)
   t.not(value, cacheItem);
 });
+
+// (async () => {
+//   const diagnose = await tsd({
+//     cwd: path.join(path.resolve(), '/dist'),
+//     typingsFile: 'someName.d.ts'
+//   });
+
+// 	console.log(diagnose.length);
+// 	//=> 2
+// })();
+
