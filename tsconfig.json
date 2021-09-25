@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "noImplicitReturns": true,
+      "esModuleInterop": true,
+      "outDir": "./dist",
+      "noEmit": false,
+      "sourceMap": true,
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true,
+      "inlineSources": true,
+      "sourceRoot": "/",
+      "strict": true,
+      "target": "es2017",
+      "resolveJsonModule": true,
+      "skipLibCheck": true,
+      "declaration": true
+    },
+    "include": ["./index.ts"],
+    "exclude": ["node_modules"]
+  }
