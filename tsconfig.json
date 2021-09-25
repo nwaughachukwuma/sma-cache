@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-      "module": "commonjs",
+      "module": "es6",
       "noImplicitReturns": true,
       "esModuleInterop": true,
       "outDir": "./dist",

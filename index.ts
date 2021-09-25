@@ -1,9 +1,16 @@
 /** Default duration before cache item is invalidated */
 const DEFAULT_TTL = 60;
+/** Default logger where there's no custom logger */
 const DEFAULT_LOGGER = console.log;
 /** Cache duration in seconds */
 type seconds = number;
 
+/**
+ *
+ * @param ttl duration in seconds before cache item is invalidated
+ * @param logger custom logger
+ * @returns
+ */
 export default function simpleCache<T = any>(
   ttl: seconds = DEFAULT_TTL,
   logger: typeof DEFAULT_LOGGER = DEFAULT_LOGGER
