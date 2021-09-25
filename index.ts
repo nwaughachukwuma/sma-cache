@@ -25,7 +25,7 @@ export default function simpleCache<T = any>(
       this.unset(key);
 
       const timer = setTimeout(() => {
-        logger(`invalidating ${key} after timeout`);
+        logger(`invalidating cache item with key ${key}`);
         this.unset(key);
       }, (options?.ttl ?? ttl) * 1000);
 
@@ -37,12 +37,10 @@ export default function simpleCache<T = any>(
         return false;
       }
 
-      const cached = cache.get(key);
-      if (cached) {
-        clearTimeout(cached.timer);
-      }
-
+      const cached = cache.get(key)!;
+      clearTimeout(cached.timer);
       cache.delete(key);
+
       return true;
     },
     hasKey(key: string): boolean {
