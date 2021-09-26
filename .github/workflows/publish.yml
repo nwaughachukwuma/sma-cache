@@ -1,6 +1,5 @@
 name: Publish package to npm
 on: 
-  - pull_request
   - push
 jobs:
   publish:
@@ -29,9 +28,7 @@ jobs:
           cmd: install
       - run: yarn tsc
       - run: yarn test
-      # - uses: JS-DevTools/npm-publish@v1
-      #   if: matrix.node-version == 14
-      #   with:
-      #     token: ${{ secrets.NPM_TOKEN }}
       - if: matrix.node-version == 14
-        run: echo ${{secrets.NPM_TOKEN}}
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
