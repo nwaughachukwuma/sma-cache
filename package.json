@@ -1,7 +1,7 @@
 {
-	"name": "simple-cache",
+	"name": "sma-cache",
 	"version": "0.0.1",
-	"description": "Cache any data-type within a given ttl, with automatic invalidation.",
+	"description": "Simple cache with automatic invalidation",
 	"author": {
 		"name": "Chukwuma Nwaugha",
 		"email": "nwaughac@gmail.com",
@@ -26,9 +26,9 @@
 	],
 	"scripts": {
 		"tsc": "tsc",
-		"move-tsd": "cp index.test-d.ts ./dist/index.test-d.ts",
-		"clean-tsd": "rm ./dist/index.test-d.ts",
-		"tsd": "yarn move-tsd && tsd && yarn clean-tsd",
+		"tsd": "yarn tsd:prep && tsd && yarn tsd:clean",
+		"tsd:prep": "cp index.test-d.ts ./dist/index.test-d.ts",
+		"tsd:clean": "rm ./dist/index.test-d.ts",
 		"test": "ava && yarn tsd"
 	},
 	"devDependencies": {

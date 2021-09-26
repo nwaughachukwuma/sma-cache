@@ -1,6 +1,8 @@
 {
     "compilerOptions": {
       "module": "es6",
+      "lib": ["es6", "dom"],
+      "target": "es6",
       "noImplicitReturns": true,
       "esModuleInterop": true,
       "outDir": "./dist",
@@ -11,7 +13,6 @@
       "inlineSources": true,
       "sourceRoot": "/",
       "strict": true,
-      "target": "es2017",
       "resolveJsonModule": true,
       "skipLibCheck": true,
       "declaration": true
