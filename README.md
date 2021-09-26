@@ -69,3 +69,7 @@ The cache object exposes the following API
   - **key**: the key for the cache item<br>
     Type: string<br>
     Required: true
+- **hasKey(key)**: check if item with key exist in cache
+  - **key**: the key for the cache item<br>
+    Type: string<br>
+    Required: true
