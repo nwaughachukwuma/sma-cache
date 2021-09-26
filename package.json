@@ -1,7 +1,12 @@
 {
 	"name": "sma-cache",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Simple cache with automatic invalidation",
+	"repository": {
+		"type": "git",
+		"url": "nwaughachukwuma/sma-cache",
+		"directory": "https://github.com/nwaughachukwuma"
+	},
 	"author": {
 		"name": "Chukwuma Nwaugha",
 		"email": "nwaughac@gmail.com",
