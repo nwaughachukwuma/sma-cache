@@ -3,13 +3,29 @@ const DEFAULT_TTL = 60;
 const logger = console.log;
 /** Cache duration in seconds */
 type seconds = number;
+export interface CacheHandlers<T> {
+  get(key: string): T | undefined;
+  set(
+    key: string,
+    value: T,
+    options?:
+      | {
+          ttl: seconds;
+        }
+      | undefined
+  ): T;
+  unset(key: string): boolean;
+  hasKey(key: string): boolean;
+}
 
 /**
  *
  * @param ttl duration in seconds before cache item is invalidated
  * @returns
  */
-export default function simpleCache<T = any>(ttl: seconds = DEFAULT_TTL) {
+export default function simpleCache<T = any>(
+  ttl: seconds = DEFAULT_TTL
+): CacheHandlers<T> {
   const cache = new Map<string, { value: T; timer: number }>();
 
   return {
