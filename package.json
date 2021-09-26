@@ -1,7 +1,7 @@
 {
-	"name": "simple-cache",
+	"name": "sma-cache",
 	"version": "0.0.1",
-	"description": "A self invalidating cache",
+	"description": "Simple cache with automatic invalidation",
 	"author": {
 		"name": "Chukwuma Nwaugha",
 		"email": "nwaughac@gmail.com",
