@@ -14,7 +14,7 @@
 	},
 	"license": "MIT",
 	"type": "module",
-	"main": "./index.ts",
+	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"exports": "./dist/index.js",
 	"keywords": [
@@ -26,8 +26,7 @@
 		"expire"
 	],
 	"files": [
-		"./dist/index.js",
-		"./dist/index.d.ts"
+		"dist"
 	],
 	"scripts": {
 		"tsc": "tsc",
