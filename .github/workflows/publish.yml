@@ -3,7 +3,7 @@ on:
   - pull_request
   - push
 jobs:
-  test:
+  publish:
     name: test on Node.js ${{ matrix.node-version }}
     runs-on: ubuntu-latest
     strategy:
@@ -29,3 +29,7 @@ jobs:
           cmd: install
       - run: yarn tsc
       - run: yarn test
+      - uses: JS-DevTools/npm-publish@v1
+        if: matrix.node-version == 14
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
