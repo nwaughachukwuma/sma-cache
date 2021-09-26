@@ -52,18 +52,18 @@ Default: 60
 The cache object exposes the following API
 
 - **set(key, options)**: store an item in the cache
-  - **key**: the key for the cache item
-    Type: string
+  - **key**: the key for the cache item<br>
+    Type: string<br>
     Required: true
   - **options**
-    - **ttl**: Set a custom ttl for a cache item
-      Type: number
+    - **ttl**: Set a custom ttl for a cache item<br>
+      Type: number<br>
       Default: global `ttl`
 - **get(key)**: get a cache item
-  - **key**: the key for the cache item
-   Type: string
+  - **key**: the key for the cache item <br>
+   Type: string<br>
    Required: true
 - **unset(key)**: remove an item from the cache
-  - **key**: the key for the cache item
-    Type: string
+  - **key**: the key for the cache item<br>
+    Type: string<br>
     Required: true
