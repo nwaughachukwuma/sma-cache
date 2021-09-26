@@ -1,6 +1,6 @@
 # Sma-cache
 
-A simple cache that automatically invalidates items after a given TTL. Runs on node and on the browser
+A simple cache that automatically invalidates a cached item after a given TTL. Runs on node and the browser
 
 ## Installation
 
@@ -28,9 +28,11 @@ var key = "a-random-key";
 cache.set(key, cacheItem);
 ```
 
-The cacheItem will automatically invalidate after TTL, so that:
+The `cacheItem` will automatically invalidate after TTL, so that:
 
 ```js
+// using a delay mechanism
+delay(TTL)
 cache.get(key); // => undefined
 ```
 
