@@ -26,7 +26,7 @@ jobs:
       - uses: borales/actions-yarn@v2.3.0
         with:
           cmd: install
-      - run: rm -rf dist && yarn tsc
+      - run: yarn tsc
       - run: yarn test
       - if: matrix.node-version == 14
         uses: JS-DevTools/npm-publish@v1
