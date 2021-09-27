@@ -5,15 +5,15 @@ const logger = console.log;
 type seconds = number;
 export interface CacheHandlers<T> {
   get(key: string): T | undefined;
-  set(
+  set<K extends T>(
     key: string,
-    value: T,
+    value: K,
     options?:
       | {
           ttl: seconds;
         }
       | undefined
-  ): T;
+  ): K;
   unset(key: string): boolean;
   hasKey(key: string): boolean;
 }
@@ -32,7 +32,7 @@ export default function simpleCache<T = any>(
     get(key: string) {
       return cache.get(key)?.value;
     },
-    set(key: string, value: T, options?: { ttl: seconds }) {
+    set<K extends T>(key: string, value: K, options?: { ttl: seconds }) {
       this.unset(key);
 
       const timer = setTimeout(() => {
