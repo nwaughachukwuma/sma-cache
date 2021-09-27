@@ -1,6 +1,6 @@
 {
 	"name": "sma-cache",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "Simple cache with automatic invalidation",
 	"repository": {
 		"type": "git",
@@ -29,6 +29,7 @@
 		"dist"
 	],
 	"scripts": {
+		"postinstall": "tsc",
 		"tsc": "tsc",
 		"tsd": "yarn tsd:prep && tsd && yarn tsd:clean",
 		"tsd:prep": "cp index.test-d.ts ./dist/index.test-d.ts",
