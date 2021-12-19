@@ -4,14 +4,9 @@
 	"description": "Simple cache with automatic invalidation",
 	"repository": {
 		"type": "git",
-		"url": "nwaughachukwuma/sma-cache",
-		"directory": "https://github.com/nwaughachukwuma"
+		"url": "https://github.com/nwaughachukwuma/sma-cache"
 	},
-	"author": {
-		"name": "Chukwuma Nwaugha",
-		"email": "nwaughac@gmail.com",
-		"url": "https://nwaughachukwuma.github.io/portfolio"
-	},
+	"author": "nwaughachukwuma<nwaughac@gmail.com>",
 	"license": "MIT",
 	"type": "module",
 	"main": "./dist/index.js",
