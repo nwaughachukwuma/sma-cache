@@ -71,7 +71,7 @@ Returns a `cache object` which exposes methods to interact with the cache
 
 ### ttl
 
-Time in seconds before the item stored with `key: random-key` is invalidated
+Time in milliseconds before the item stored with `key: random-key` is invalidated
 
 Type: number <br>
 Default: 60
