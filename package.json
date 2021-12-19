@@ -1,6 +1,6 @@
 {
 	"name": "sma-cache",
-	"version": "0.0.6",
+	"version": "0.1.0",
 	"description": "Simple cache with automatic invalidation",
 	"repository": {
 		"type": "git",
