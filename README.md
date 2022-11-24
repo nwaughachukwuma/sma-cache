@@ -20,7 +20,7 @@ pnpm install sma-cache
 ```js
 import simpleCache from "sma-cache";
 
-var TTL = 5;
+var TTL = 5000; // 5s
 var cache = simpleCache(TTL);
 var cacheItem = { greeting: "Hello World!" };
 var key = "a-random-key";
@@ -74,7 +74,7 @@ Returns a `cache object` which exposes methods to interact with the cache
 Time in milliseconds before the item stored with `key: random-key` is invalidated
 
 Type: number <br>
-Default: 60
+Default: 6000
 
 ### Cache Object API
 
