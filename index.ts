@@ -1,6 +1,6 @@
 /** Default duration in milliseconds before cache item is invalidated */
 const DEFAULT_TTL = 60000;
-const logger = console.log;
+let logger = console.log;
 /** Cache duration in milliseconds */
 type milliseconds = number;
 export interface CacheHandlers<T> {
@@ -14,6 +14,10 @@ export interface CacheHandlers<T> {
   hasKey(key: string): boolean;
 }
 
+export interface Options {
+  debug?: boolean;
+}
+
 type Q<T> = { value: T; timer: number };
 /**
  *
@@ -21,8 +25,10 @@ type Q<T> = { value: T; timer: number };
  * @returns
  */
 export default function simpleCache<T = any>(
-  ttl: milliseconds = DEFAULT_TTL
+  ttl: milliseconds = DEFAULT_TTL,
+  options?: Options
 ): CacheHandlers<T> {
+  if (!options?.debug) logger = () => {};
   const cache = initStore();
 
   function initStore() {
