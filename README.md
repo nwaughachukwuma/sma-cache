@@ -1,6 +1,6 @@
 # Sma-cache
 
-A simple cache that automatically invalidates a cached item after a given TTL. Runs on node and the browser
+A simple memory cache with automatic invalidation after TTL. Runs on the browser and node
 
 ## Installation
 
