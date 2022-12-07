@@ -1,6 +1,6 @@
 import test from "ava";
 import delay from "delay";
-import simpleCache from "./dist/index.js";
+import simpleCache from "../dist/index.js";
 
 const CACHE_TTL = 5 * 1000;
 const cache = simpleCache(CACHE_TTL, { debug: true });
@@ -49,7 +49,7 @@ test("can programmatically invalidate cache", async (t) => {
   t.not(value2, cacheItem);
 });
 
-test("can initialize the cache with a store", (t) => {
+test("can initialize the cache with a Map object store", (t) => {
   const key = now();
   const store = new Map();
   const cache = simpleCache(CACHE_TTL, { store });
