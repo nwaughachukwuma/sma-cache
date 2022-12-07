@@ -8,16 +8,13 @@ export interface CacheHandlers<T> {
   set<K extends T>(
     key: string,
     value: K,
-    options?:
-      | {
-          ttl: milliseconds;
-        }
-      | undefined
+    options?: { ttl: milliseconds } | undefined
   ): K;
   unset(key: string): boolean;
   hasKey(key: string): boolean;
 }
 
+type Q<T> = { value: T; timer: number };
 /**
  *
  * @param ttl duration in milliseconds before cache item is invalidated
@@ -26,7 +23,12 @@ export interface CacheHandlers<T> {
 export default function simpleCache<T = any>(
   ttl: milliseconds = DEFAULT_TTL
 ): CacheHandlers<T> {
-  const cache = new Map<string, { value: T; timer: number }>();
+  const cache = initStore();
+
+  function initStore() {
+    logger("initializing cache store");
+    return new Map<string, Q<T>>();
+  }
 
   return {
     get(key: string) {
