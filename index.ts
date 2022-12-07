@@ -15,31 +15,32 @@ export interface CacheHandlers<T> {
 }
 
 type LocalStorage = typeof localStorage | undefined;
+type Q<T> = { value: T; timer: number };
 
-export interface Options {
-  store?: Map<string, { value: any; timer: number }> | LocalStorage;
+export interface Options<T> {
+  store?: Map<string, { value: T; timer: number }> | LocalStorage;
   debug?: boolean;
 }
 
-type Q<T> = { value: T; timer: number };
-
-function wrappedLocalStorage<T>() {
-  if (typeof localStorage === "undefined") {
+function wrappedLocalStorage<T>(_s: LocalStorage) {
+  if (typeof _s === "undefined") {
     return new Map<string, Q<T>>();
   }
 
   return {
     get(key: string) {
-      return JSON.parse(localStorage.getItem(key) ?? "");
+      return JSON.parse(_s.getItem(key) ?? "") as Q<T> | undefined;
     },
     set(key: string, v: Q<T>) {
-      localStorage.setItem(key, JSON.stringify(v));
+      _s.setItem(key, JSON.stringify(v));
     },
     delete(key: string) {
-      localStorage.removeItem(key);
+      const hasItem = _s.getItem(key) !== null;
+      _s.removeItem(key);
+      return hasItem;
     },
     has(key: string) {
-      return localStorage.getItem(key) !== null;
+      return _s.getItem(key) !== null;
     },
   };
 }
@@ -51,7 +52,7 @@ function wrappedLocalStorage<T>() {
  */
 export default function simpleCache<T = any>(
   ttl: milliseconds = DEFAULT_TTL,
-  options?: Options
+  options?: Options<T>
 ): CacheHandlers<T> {
   if (!options?.debug) logger = () => {};
   const cache = initStore();
@@ -61,7 +62,7 @@ export default function simpleCache<T = any>(
     if (options?.store instanceof Map) {
       return options.store;
     } else if (options?.store) {
-      return wrappedLocalStorage<T>();
+      return wrappedLocalStorage<T>(options.store);
     }
 
     return new Map<string, Q<T>>();
