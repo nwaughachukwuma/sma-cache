@@ -14,10 +14,8 @@ export interface CacheHandlers<T> {
   hasKey(key: string): boolean;
 }
 
-type LocalStorage = typeof localStorage | undefined;
-
 export interface Options {
-  store?: Map<string, { value: any; timer: number }> | LocalStorage;
+  store?: Map<string, { value: any; timer: number }>;
   debug?: boolean;
 }
 
@@ -36,6 +34,9 @@ export default function simpleCache<T = any>(
 
   function initStore() {
     logger("initializing cache store");
+    if (options?.store instanceof Map) {
+      return options.store;
+    }
     return new Map<string, Q<T>>();
   }
 
