@@ -14,12 +14,36 @@ export interface CacheHandlers<T> {
   hasKey(key: string): boolean;
 }
 
+type LocalStorage = typeof localStorage | undefined;
+
 export interface Options {
-  store?: Map<string, { value: any; timer: number }>;
+  store?: Map<string, { value: any; timer: number }> | LocalStorage;
   debug?: boolean;
 }
 
 type Q<T> = { value: T; timer: number };
+
+function wrappedLocalStorage<T>() {
+  if (typeof localStorage === "undefined") {
+    return new Map<string, Q<T>>();
+  }
+
+  return {
+    get(key: string) {
+      return JSON.parse(localStorage.getItem(key) ?? "");
+    },
+    set(key: string, v: Q<T>) {
+      localStorage.setItem(key, JSON.stringify(v));
+    },
+    delete(key: string) {
+      localStorage.removeItem(key);
+    },
+    has(key: string) {
+      return localStorage.getItem(key) !== null;
+    },
+  };
+}
+
 /**
  *
  * @param ttl duration in milliseconds before cache item is invalidated
@@ -36,7 +60,10 @@ export default function simpleCache<T = any>(
     logger("initializing cache store");
     if (options?.store instanceof Map) {
       return options.store;
+    } else if (options?.store) {
+      return wrappedLocalStorage<T>();
     }
+
     return new Map<string, Q<T>>();
   }
 
