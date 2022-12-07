@@ -14,7 +14,10 @@ export interface CacheHandlers<T> {
   hasKey(key: string): boolean;
 }
 
+type LocalStorage = typeof localStorage | undefined;
+
 export interface Options {
+  store?: Map<string, { value: any; timer: number }> | LocalStorage;
   debug?: boolean;
 }
 
