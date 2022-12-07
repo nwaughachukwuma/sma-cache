@@ -3,7 +3,7 @@ import delay from "delay";
 import simpleCache from "./dist/index.js";
 
 const CACHE_TTL = 5 * 1000;
-const cache = simpleCache(CACHE_TTL);
+const cache = simpleCache(CACHE_TTL, { debug: true });
 const now = () => Date.now().toString();
 const cacheItem = { greeting: "Hello World!" };
 
@@ -26,7 +26,7 @@ test("cache gets invalidated after TTL", async (t) => {
   const key = now();
   cache.set(key, cacheItem);
 
-  const BUFFER_TIME = 1000
+  const BUFFER_TIME = 1000;
   await delay(CACHE_TTL + BUFFER_TIME);
 
   const value = cache.get(key);
@@ -47,4 +47,13 @@ test("can programmatically invalidate cache", async (t) => {
 
   const value2 = cache.get(key);
   t.not(value2, cacheItem);
+});
+
+test("can initialize the cache with a store", (t) => {
+  const key = now();
+  const store = new Map();
+  const cache = simpleCache(CACHE_TTL, { store });
+
+  cache.set(key, cacheItem);
+  t.is(cache.get(key), cacheItem);
 });
