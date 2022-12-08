@@ -1,4 +1,3 @@
-/** Default duration in milliseconds before cache item is invalidated */
 const DEFAULT_TTL = 60000;
 let logger = console.log;
 /** Cache duration in milliseconds */
@@ -14,35 +13,10 @@ export interface CacheHandlers<T> {
   hasKey(key: string): boolean;
 }
 
-type LocalStorage = typeof localStorage | undefined;
 type Q<T> = { value: T; timer: number };
-
 export interface Options<T> {
-  store?: Map<string, { value: T; timer: number }> | LocalStorage;
+  store?: Map<string, { value: T; timer: number }>;
   debug?: boolean;
-}
-
-function wrappedLocalStorage<T>(_s: LocalStorage) {
-  if (typeof _s === "undefined") {
-    return new Map<string, Q<T>>();
-  }
-
-  return {
-    get(key: string) {
-      return JSON.parse(_s.getItem(key) ?? "") as Q<T> | undefined;
-    },
-    set(key: string, v: Q<T>) {
-      _s.setItem(key, JSON.stringify(v));
-    },
-    delete(key: string) {
-      const hasItem = _s.getItem(key) !== null;
-      _s.removeItem(key);
-      return hasItem;
-    },
-    has(key: string) {
-      return _s.getItem(key) !== null;
-    },
-  };
 }
 
 /**
@@ -55,16 +29,13 @@ export default function simpleCache<T = any>(
   options?: Options<T>
 ): CacheHandlers<T> {
   if (!options?.debug) logger = () => {};
-  const cache = initStore();
+  const cache = createStore();
 
-  function initStore() {
-    logger("initializing cache store");
+  function createStore() {
+    logger("creating cache store");
     if (options?.store instanceof Map) {
       return options.store;
-    } else if (options?.store) {
-      return wrappedLocalStorage<T>(options.store);
     }
-
     return new Map<string, Q<T>>();
   }
 
@@ -84,14 +55,11 @@ export default function simpleCache<T = any>(
       return value;
     },
     unset(key: string): boolean {
-      if (!cache.has(key)) {
-        return false;
-      }
+      if (!cache.has(key)) return false;
 
       const cached = cache.get(key)!;
       clearTimeout(cached.timer);
       cache.delete(key);
-
       return true;
     },
     hasKey(key: string): boolean {
