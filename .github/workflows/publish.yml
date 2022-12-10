@@ -23,13 +23,16 @@ jobs:
           path: |
             **/node_modules
           key: ${{ runner.os }}-${{ matrix.node-version }}-modules-${{ hashFiles('**/yarn.lock') }}
-      - uses: borales/actions-yarn@v4
+      - name: install dependencies
+        uses: borales/actions-yarn@v4
         with:
           cmd: install
-      - uses: borales/actions-yarn@v4
+      - name: build
+        uses: borales/actions-yarn@v4
         with:
           cmd: tsc
-      - uses: borales/actions-yarn@v4
+      - name: test
+        uses: borales/actions-yarn@v4
         with:
           cmd: test
       - if: matrix.node-version == 14
