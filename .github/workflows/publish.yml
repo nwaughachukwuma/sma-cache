@@ -13,11 +13,11 @@ jobs:
           - 14
           - 12
     steps: 
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with: 
           node-version: ${{ matrix.node-version }}
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: cache-deps
         with:
           path: |
@@ -26,8 +26,12 @@ jobs:
       - uses: borales/actions-yarn@v4
         with:
           cmd: install
-      - run: yarn tsc
-      - run: yarn test
+      - uses: borales/actions-yarn@v4
+        with:
+          cmd: tsc
+      - uses: borales/actions-yarn@v4
+        with:
+          cmd: test
       - if: matrix.node-version == 14
         uses: JS-DevTools/npm-publish@v1
         with:
