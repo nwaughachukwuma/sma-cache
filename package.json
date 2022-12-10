@@ -33,7 +33,7 @@
 		"tsd": "yarn tsd:prep && tsd && yarn tsd:clean",
 		"tsd:prep": "cp index.test-d.ts ./dist/index.test-d.ts",
 		"tsd:clean": "rm ./dist/index.test-d.ts",
-		"test": "tsc && ava && yarn tsd"
+		"test": "yarn tsd && ava"
 	},
 	"devDependencies": {
 		"ava": "^3.15.0",
