@@ -1,6 +1,6 @@
 import test from "ava";
 import delay from "delay";
-import simpleCache from "../dist/index.js";
+import simpleCache from "./dist/index.js";
 
 const CACHE_TTL = 5 * 1000;
 const cache = simpleCache(CACHE_TTL, { debug: true });
