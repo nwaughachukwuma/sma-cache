@@ -13,9 +13,8 @@ export interface CacheHandlers<T> {
   hasKey(key: string): boolean;
 }
 
-type Q<T> = { value: T; timer: number };
-export interface Options<T> {
-  store?: Map<string, { value: T; timer: number }>;
+type Q<T> = { value: T; timer: ReturnType<typeof setTimeout> };
+export interface Options {
   debug?: boolean;
 }
 
@@ -26,16 +25,12 @@ export interface Options<T> {
  */
 export default function simpleCache<T = any>(
   ttl: milliseconds = DEFAULT_TTL,
-  options?: Options<T>
+  options?: Options
 ): CacheHandlers<T> {
   if (!options?.debug) logger = () => {};
   const cache = createStore();
-
   function createStore() {
     logger("creating cache store");
-    if (options?.store instanceof Map) {
-      return options.store;
-    }
     return new Map<string, Q<T>>();
   }
 
@@ -59,8 +54,7 @@ export default function simpleCache<T = any>(
 
       const cached = cache.get(key)!;
       clearTimeout(cached.timer);
-      cache.delete(key);
-      return true;
+      return cache.delete(key);
     },
     hasKey(key: string): boolean {
       return cache.has(key);

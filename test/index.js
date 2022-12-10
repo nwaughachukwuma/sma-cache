@@ -48,12 +48,3 @@ test("can programmatically invalidate cache", async (t) => {
   const value2 = cache.get(key);
   t.not(value2, cacheItem);
 });
-
-test("can initialize the cache with a Map object store", (t) => {
-  const key = now();
-  const store = new Map();
-  const cache = simpleCache(CACHE_TTL, { store });
-
-  cache.set(key, cacheItem);
-  t.is(cache.get(key), cacheItem);
-});
