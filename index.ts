@@ -1,6 +1,5 @@
-/** Default duration in milliseconds before cache item is invalidated */
 const DEFAULT_TTL = 60000;
-const logger = console.log;
+let logger = console.log;
 /** Cache duration in milliseconds */
 type milliseconds = number;
 export interface CacheHandlers<T> {
@@ -8,14 +7,15 @@ export interface CacheHandlers<T> {
   set<K extends T>(
     key: string,
     value: K,
-    options?:
-      | {
-          ttl: milliseconds;
-        }
-      | undefined
+    options?: { ttl: milliseconds } | undefined
   ): K;
   unset(key: string): boolean;
   hasKey(key: string): boolean;
+}
+
+type Q<T> = { value: T; timer: ReturnType<typeof setTimeout> };
+export interface Options {
+  debug?: boolean;
 }
 
 /**
@@ -24,9 +24,15 @@ export interface CacheHandlers<T> {
  * @returns
  */
 export default function simpleCache<T = any>(
-  ttl: milliseconds = DEFAULT_TTL
+  ttl: milliseconds = DEFAULT_TTL,
+  options?: Options
 ): CacheHandlers<T> {
-  const cache = new Map<string, { value: T; timer: number }>();
+  if (!options?.debug) logger = () => {};
+  const cache = createStore();
+  function createStore() {
+    logger("creating cache store");
+    return new Map<string, Q<T>>();
+  }
 
   return {
     get(key: string) {
@@ -44,15 +50,11 @@ export default function simpleCache<T = any>(
       return value;
     },
     unset(key: string): boolean {
-      if (!cache.has(key)) {
-        return false;
-      }
+      if (!cache.has(key)) return false;
 
       const cached = cache.get(key)!;
       clearTimeout(cached.timer);
-      cache.delete(key);
-
-      return true;
+      return cache.delete(key);
     },
     hasKey(key: string): boolean {
       return cache.has(key);

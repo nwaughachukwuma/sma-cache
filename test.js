@@ -3,7 +3,7 @@ import delay from "delay";
 import simpleCache from "./dist/index.js";
 
 const CACHE_TTL = 5 * 1000;
-const cache = simpleCache(CACHE_TTL);
+const cache = simpleCache(CACHE_TTL, { debug: true });
 const now = () => Date.now().toString();
 const cacheItem = { greeting: "Hello World!" };
 
@@ -26,7 +26,7 @@ test("cache gets invalidated after TTL", async (t) => {
   const key = now();
   cache.set(key, cacheItem);
 
-  const BUFFER_TIME = 1000
+  const BUFFER_TIME = 1000;
   await delay(CACHE_TTL + BUFFER_TIME);
 
   const value = cache.get(key);
